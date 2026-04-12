@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+env.bak/
+venv.bak/
+
+# Secrets & Environment
+.env
+.env.local
+*.pem
+
+# Build / Packaging
+build/
+dist/
+*.egg-info/
+*.whl
+
+# IDEs & OS Files
+.vscode/
+.idea/
+*.swp
+*.DS_Store
+
+# ADK specific (if any generated caches)
+.adk/
