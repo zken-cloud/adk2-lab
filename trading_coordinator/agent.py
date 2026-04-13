@@ -63,10 +63,13 @@ intent_classifier = Agent(
 # to a source node automatically directs execution to the matching target node based
 # on the raw output of the source node.
 # ==============================================================================
+from tools.compliance import compliance_check_tool
+
 root_agent = Workflow(
     name="trading_coordinator",
     edges=[
-        ("START", intent_classifier),
+        ("START", compliance_check_tool),
+        (compliance_check_tool, intent_classifier),
         (intent_classifier, {
             "profile": profile_agent,
             "spot": spot_agent,
@@ -76,6 +79,7 @@ root_agent = Workflow(
         }),
     ]
 )
+
 
 # ==============================================================================
 # [ADK 2.0 FEATURE]: App Packaging & State Resumability

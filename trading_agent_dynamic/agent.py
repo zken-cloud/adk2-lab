@@ -1,7 +1,3 @@
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent))
-
 from google.adk.agents import Agent
 from google.adk.apps.app import App, ResumabilityConfig
 
@@ -33,9 +29,6 @@ root_agent = Agent(
     ],
 )
 
-# ==============================================================================
-# [ADK 2.0 FEATURE]: Declarative App Container
-# ==============================================================================
 app = App(
     name="trading_coordinator_dynamic",
     root_agent=root_agent,
@@ -43,3 +36,5 @@ app = App(
 )
 
 agent = root_agent
+
+

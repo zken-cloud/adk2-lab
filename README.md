@@ -79,11 +79,20 @@ This architecture uses static, deterministic routing paths. The orchestrator act
 ### 🚀 Step-by-Step Execution
 1.  **Launch the Agent:** Run the following command from your terminal to start the interactive CLI session:
     ```bash
-    adk run trading_coordinator
+    .venv/bin/adk run trading_coordinator
     ```
 2.  **Test the Workflow:** Try asking a query that maps to a specific intent, such as:
     > *"I want to check my user profile."*
 3.  **Observe the Output:** Notice how the flow is deterministically routed to the `profile` agent based on the defined edges.
+
+### 🛡️ [New Feature]: Pre-Processing Guardrails with `@node`
+We have successfully implemented an ADK 2.0 `@node` compliance pre-processing step that validates user input before execution routing:
+```python
+@node(name="compliance_check")
+def compliance_check_tool(node_input: types.Content) -> Event:
+    # Validates incoming text and forwards execution context down the workflow graph
+    return Event(output=text_input)
+```
 
 ### ⚖️ Trade-offs
 *   **✅ Deterministic Control:** Flow paths are explicitly defined and highly predictable.
@@ -93,6 +102,7 @@ This architecture uses static, deterministic routing paths. The orchestrator act
 Ideal for structured compliance pipelines, customer service IVR decision trees, and strict procedural workflows.
 
 ---
+
 
 ## ⚡ Module 2: Dynamic Task Delegation (20 Mins)
 
