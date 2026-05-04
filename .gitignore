@@ -29,3 +29,6 @@ dist/
 
 # ADK specific (if any generated caches)
 .adk/
+
+# Claude Code
+.claude/

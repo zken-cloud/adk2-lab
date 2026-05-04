@@ -27,20 +27,15 @@ In this immersive 60-minute hands-on workshop, you will explore the three primar
     gcloud auth application-default login
     ```
 
-### Step 2: Download the ADK 2.0 Package
-```bash
-gsutil cp 'gs://agent_framework/2.0/latest/google_adk-*.whl' .
-```
-
-### Step 3: Initialize the Virtual Environment
+### Step 2: Initialize the Virtual Environment
 ```bash
 uv venv --python "python3.11" ".venv"
 source .venv/bin/activate
 ```
 
-### Step 4: Install Dependencies
+### Step 3: Install ADK 2.0
 ```bash
-uv pip install google_adk-*.whl
+pip install google-adk==2.0.0b1
 ```
 
 ---
