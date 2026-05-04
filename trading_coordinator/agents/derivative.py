@@ -1,19 +1,14 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
 from google.adk.agents import Agent
-from pydantic import BaseModel, Field
-
-class DerivativeTradeInput(BaseModel):
-    symbol: str = Field(description="The futures symbol, e.g., 'ETH-PERP'")
-    side: str = Field(description="Must be 'long' or 'short'")
-    amount: float = Field(description="Position size")
-    leverage: int = Field(description="Leverage multiplier")
-
-def execute_derivative_trade(symbol: str, side: str, amount: float, leverage: int) -> str:
-    """Executes a leveraged futures position on the derivatives platform."""
-    return f"Successfully opened a {side} position on {symbol} for {amount} units at {leverage}x leverage."
+from shared.tools import execute_derivative_trade
 
 derivative_agent = Agent(
     name="derivative_agent",
     model="gemini-3.1-flash-lite-preview",
+    mode="task",
     description="Handles perpetual futures, leverage trading, and opening derivative positions.",
     instruction="""
     You are a derivatives and perpetual futures trading assistant.

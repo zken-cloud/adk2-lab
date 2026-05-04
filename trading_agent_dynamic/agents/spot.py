@@ -1,20 +1,10 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
 from google.adk.agents import Agent
-from pydantic import BaseModel, Field
-
-class SpotTradeInput(BaseModel):
-    symbol: str = Field(description="The cryptocurrency pair symbol, e.g., 'BTC/USDT'")
-    side: str = Field(description="Must be 'buy' or 'sell'")
-    amount: float = Field(description="The amount of cryptocurrency to trade")
-
-class SpotTradeOutput(BaseModel):
-    execution_receipt: str
-    estimated_cost: str
-
-def execute_spot_trade(symbol: str, side: str, amount: float) -> str:
-    """Executes a spot trade on the exchange market."""
-    price = 95000.0 if "BTC" in symbol else 3500.0
-    cost = amount * price
-    return f"Executed {side} of {amount} {symbol}. Estimated cost: {cost} USDT."
+from shared.tools import execute_spot_trade
+from shared.schemas import SpotTradeInput, SpotTradeOutput
 
 spot_agent = Agent(
     name="spot_agent",

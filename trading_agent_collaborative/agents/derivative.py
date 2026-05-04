@@ -1,13 +1,17 @@
-from google.adk.agents import Agent
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
-def execute_derivative_trade(symbol: str, side: str, amount: float, leverage: int) -> str:
-    """Executes a leveraged futures position on the derivatives platform."""
-    return f"Successfully opened a {side} position on {symbol} for {amount} units at {leverage}x leverage."
+from google.adk.agents import Agent
+from shared.tools import execute_derivative_trade
+from shared.schemas import DerivativeTradeInput, DerivativeTradeOutput
 
 derivative_agent = Agent(
     name="derivative_agent",
     model="gemini-3.1-flash-lite-preview",
     mode="task",
+    input_schema=DerivativeTradeInput,
+    output_schema=DerivativeTradeOutput,
     description="Handles perpetual futures, margin leverage trading, and opening derivative positions via structured execution.",
     instruction="""
     You are a structured task execution agent.

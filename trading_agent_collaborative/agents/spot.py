@@ -1,10 +1,9 @@
-from google.adk.agents import Agent
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
-def execute_spot_trade(symbol: str, side: str, amount: float) -> str:
-    """Executes a spot trade on the exchange market."""
-    price = 95000.0 if "BTC" in symbol else 3500.0
-    cost = amount * price
-    return f"Executed {side} of {amount} {symbol}. Estimated cost: {cost} USDT."
+from google.adk.agents import Agent
+from shared.tools import execute_spot_trade
 
 spot_agent = Agent(
     name="spot_agent",

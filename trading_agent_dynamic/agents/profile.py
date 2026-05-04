@@ -1,29 +1,16 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
 from google.adk.agents import Agent
-from pydantic import BaseModel
-
-class ProfileOutput(BaseModel):
-    name: str
-    kyc_status: str
-    membership_tier: str
-    balances: dict
-
-MOCK_USERS = {
-    "user_123": {
-        "name": "Alice Smith",
-        "kyc_status": "Verified",
-        "tier": "Premium",
-        "balances": {"USDT": 10000.0, "BTC": 0.5, "ETH": 5.0}
-    }
-}
-
-def get_user_profile(user_id: str = "user_123") -> dict:
-    """Retrieves account balances, KYC status, and membership tier."""
-    return MOCK_USERS.get(user_id, {"error": "User not found"})
+from shared.tools import get_user_profile
+from shared.schemas import ProfileInput, ProfileOutput
 
 profile_agent = Agent(
     name='profile_agent',
     model="gemini-3.1-flash-lite-preview",
     mode="task",
+    input_schema=ProfileInput,
     output_schema=ProfileOutput,
     description="Researches and retrieves user profile details, KYC verification status, and wallet balances.",
     instruction="""

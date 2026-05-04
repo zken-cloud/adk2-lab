@@ -1,37 +1,27 @@
-from pydantic import BaseModel
-from google.adk.workflow.node import node
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
+from google.adk.workflow import node
 from google.adk.events.event import Event
 from google.genai import types
+from shared.tools import check_kyc_status
 
-class ComplianceInput(BaseModel):
-    user_input: str
-
-# ==============================================================================
-# [ADK 2.0 FEATURE]: Pre-Processing @node Tool
-# ==============================================================================
 @node(name="compliance_check", rerun_on_resume=True)
 def compliance_check_tool(node_input: types.Content) -> Event:
-    """
-    A pre-processing compliance check node implemented using the ADK 2.0 @node decorator.
-    It reads the initial user message and ensures it passes compliance before intent routing.
-    """
-    # Extract raw text from standard ADK 2.0 content types
-    text_input = ''.join(p.text for p in (node_input.parts or []) if p.text).lower()
-    
-    print(f"[Compliance Check] Analyzing message: '{text_input}'")
-    
-    # Simple simulated flag detection
-    if "hack" in text_input or "illegal" in text_input:
-        # Flagged: stop execution by returning a default message
+    """Pre-processing KYC compliance check. Warns if user is not verified but allows the request through."""
+    kyc = check_kyc_status()
+
+    print(f"[Compliance Check] User: {kyc['user_name']}, KYC Status: {kyc['kyc_status']}")
+
+    if not kyc["verified"]:
         return Event(
             content=types.Content(
                 role="model",
-                parts=[types.Part.from_text("🚨 [Compliance Error]: This request violates trading compliance standards and cannot be processed.")]
+                parts=[types.Part.from_text(text=kyc["message"])]
             ),
-            # This terminates the flow gracefully without downstream triggers
+            output=node_input,
+            route="pass",
         )
-        
-    # Safe: continue by forwarding the parsed JSON-serializable text down the graph
-    return Event(output=text_input)
 
-
+    return Event(output=node_input, route="pass")

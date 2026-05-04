@@ -1,8 +1,9 @@
-from google.adk.agents import Agent
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
-def execute_transfer(asset: str, amount: float, destination: str) -> str:
-    """Transfers cryptocurrency assets to an external destination address."""
-    return f"Transfer transaction confirmed: Sent {amount} {asset} to {destination}."
+from google.adk.agents import Agent
+from shared.tools import execute_transfer
 
 transfer_agent = Agent(
     name="transfer_agent",

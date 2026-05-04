@@ -1,17 +1,10 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
 from google.adk.agents import Agent
-from pydantic import BaseModel, Field
-
-class TransferInput(BaseModel):
-    asset: str = Field(description="Cryptocurrency asset symbol, e.g., 'USDT'")
-    amount: float = Field(description="Amount to send")
-    destination: str = Field(description="Blockchain address or wallet ID")
-
-class TransferOutput(BaseModel):
-    transaction_receipt: str
-
-def execute_transfer(asset: str, amount: float, destination: str) -> str:
-    """Transfers cryptocurrency assets to an external destination address."""
-    return f"Transfer transaction confirmed: Sent {amount} {asset} to {destination}."
+from shared.tools import execute_transfer
+from shared.schemas import TransferInput, TransferOutput
 
 transfer_agent = Agent(
     name="transfer_agent",
