@@ -123,7 +123,7 @@ portfolio_summary = Agent(
 from tools.compliance import compliance_check_tool
 
 root_agent = Workflow(
-    name="trading_coordinator",
+    name="trading_agent_graph",
     edges=[
         # 1. Standard Entry
         ("START", compliance_check_tool),
@@ -151,7 +151,7 @@ root_agent = Workflow(
 # [ADK 2.0 FEATURE]: App Packaging & State Resumability
 # ==============================================================================
 app = App(
-    name="trading_coordinator",
+    name="trading_agent_graph",
     root_agent=root_agent,
     resumability_config=ResumabilityConfig(is_resumable=True),
 )

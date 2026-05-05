@@ -47,7 +47,7 @@ adk2-lab/
 ├── shared/                          # Shared utilities across all modules
 │   ├── tools.py                     # Mock data & tool functions (profile, spot, derivative, transfer, KYC)
 │   └── schemas.py                   # Pydantic input/output schemas
-├── trading_coordinator/             # Module 1: Graph-Based Workflows
+├── trading_agent_graph/             # Module 1: Graph-Based Workflows
 │   ├── agent.py                     # Workflow with dictionary routing, JoinNode, compliance
 │   ├── agents/                      # Sub-agents (profile, spot, derivative, transfer)
 │   └── tools/compliance.py          # @node KYC compliance check
@@ -65,7 +65,7 @@ adk2-lab/
 
 ## Module 1: Graph-Based Workflows (15 Mins)
 
-**Directory:** `trading_coordinator/`
+**Directory:** `trading_agent_graph/`
 
 ### Core Concepts
 Static, deterministic routing via a `Workflow` with explicit edge definitions. An LLM-based intent classifier returns a routing keyword, and the framework uses a dictionary lookup to route to the correct sub-agent.
@@ -83,7 +83,7 @@ Static, deterministic routing via a `Workflow` with explicit edge definitions. A
 ```python
 # Dictionary routing with JoinNode parallel fan-out
 root_agent = Workflow(
-    name="trading_coordinator",
+    name="trading_agent_graph",
     edges=[
         ("START", compliance_check_tool),
         (compliance_check_tool, {"pass": intent_classifier}),
@@ -103,7 +103,7 @@ root_agent = Workflow(
 
 ### Run It
 ```bash
-.venv/bin/adk run trading_coordinator
+.venv/bin/adk run trading_agent_graph
 ```
 
 **Test prompts:**
