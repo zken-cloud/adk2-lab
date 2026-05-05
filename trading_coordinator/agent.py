@@ -125,19 +125,23 @@ from tools.compliance import compliance_check_tool
 root_agent = Workflow(
     name="trading_coordinator",
     edges=[
+        # 1. Standard Entry
         ("START", compliance_check_tool),
+        # 2. Conditional Edge (Ensure tool returns "pass")
         (compliance_check_tool, {"pass": intent_classifier}),
+        # 3. Fan-out: Mapping one intent to multiple nodes for parallel processing
         (intent_classifier, {
             "profile": profile_agent,
             "spot": spot_agent,
             "derivative": derivative_agent,
             "transfer": transfer_agent,
-            "portfolio": portfolio_profile_node,
+            "portfolio": [portfolio_profile_node,market_data_node],
             "__DEFAULT__": default_handler,
         }),
-        (intent_classifier, {"portfolio": market_data_node}),
+        # 4. Fan-in (Wait for both parallel branches to finish)
         (portfolio_profile_node, portfolio_join),
         (market_data_node, portfolio_join),
+        # 5. Final Step
         (portfolio_join, portfolio_summary),
     ]
 )
