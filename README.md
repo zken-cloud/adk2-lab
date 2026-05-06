@@ -63,7 +63,9 @@ adk2-lab/
 │   ├── agents/                      # Sub-agents (profile, spot, derivative, transfer)
 │   └── tools/compliance.py          # @node KYC compliance check
 ├── trading_agent_dynamic/           # Module 2: Dynamic @node Workflows
-│   └── agent.py                     # Pure @node workflow with ctx.run_node() routing
+│   ├── agent.py                     # Pure @node workflow with ctx.run_node() routing
+│   ├── agents/                      # Sub-agent definitions (reference only, unused by @node approach)
+│   └── tools/compliance.py          # KYC compliance check (inlined in agent.py)
 ├── trading_agent_collaborative/     # Module 3: Collaborative Mixed-Mode
 │   ├── agent.py                     # Root Agent with before_agent_callback + sub_agents
 │   └── agents/                      # Sub-agents with mixed modes (single_turn, task, chat)
@@ -196,6 +198,7 @@ Natural conversational hand-offs using a root `Agent` with specialized sub-agent
 ```python
 def compliance_guard(callback_context: CallbackContext) -> types.Content | None:
     kyc = check_kyc_status()
+    print(f"[Compliance Check] User: {kyc['user_name']}, KYC Status: {kyc['kyc_status']}")
     if not kyc["verified"]:
         print(f"[Compliance Warning] {kyc['message']}")
     return None  # warn but allow
