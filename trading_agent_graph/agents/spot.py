@@ -8,7 +8,7 @@ from shared.tools import execute_spot_trade
 spot_agent = Agent(
     name="spot_agent",
     model="gemini-3.1-flash-lite-preview",
-    mode="task",
+    mode="single_turn",
     description="Executes spot market cryptocurrency trades (buying and selling assets).",
     instruction="""
     You are a spot trading execution assistant.

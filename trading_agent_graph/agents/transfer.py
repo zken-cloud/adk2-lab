@@ -8,7 +8,7 @@ from shared.tools import execute_transfer
 transfer_agent = Agent(
     name="transfer_agent",
     model="gemini-3.1-flash-lite-preview",
-    mode="task",
+    mode="single_turn",
     description="Manages transferring, sending, and withdrawing cryptocurrency assets to external addresses.",
     instruction="""
     You are an asset transfer and withdrawal assistant.

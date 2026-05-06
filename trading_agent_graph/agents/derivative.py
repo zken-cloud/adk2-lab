@@ -8,7 +8,7 @@ from shared.tools import execute_derivative_trade
 derivative_agent = Agent(
     name="derivative_agent",
     model="gemini-3.1-flash-lite-preview",
-    mode="task",
+    mode="single_turn",
     description="Handles perpetual futures, leverage trading, and opening derivative positions.",
     instruction="""
     You are a derivatives and perpetual futures trading assistant.

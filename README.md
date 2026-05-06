@@ -87,7 +87,7 @@ Static, deterministic routing via a `Workflow` with explicit edge definitions. A
 - **`JoinNode` fan-out/fan-in** — parallel execution of `portfolio_profile_node` and `market_data_node`, joined before a summary agent
 - **`@node` compliance pre-processing** — KYC validation before intent classification
 - **`generate_content_config`** — `temperature=0.0` on the classifier for deterministic output
-- **Sub-agent `mode` settings** — `single_turn` for profile, `task` for spot/derivative/transfer
+- **Sub-agent `mode` settings** — `single_turn` for all sub-agents (profile, spot, derivative, transfer)
 - **`App` with `ResumabilityConfig`** — state resumability support
 
 ### Implementation Highlights
@@ -191,7 +191,6 @@ Natural conversational hand-offs using a root `Agent` with specialized sub-agent
 - **Mixed-mode sub-agents** — `single_turn` (profile), `task` (derivative), `chat` (spot, transfer)
 - **`before_agent_callback` compliance guardrail** — callback-based KYC check before each request
 - **No `mode` on root agent** — per ADK 2.0 docs, `mode` is a subagent-only property
-- **Pydantic `input_schema` / `output_schema`** — type-safe I/O on task-mode agents
 - **Autonomous LLM routing** — the root agent uses sub-agent descriptions to delegate
 
 ### Implementation Highlights
@@ -248,5 +247,5 @@ All three modules share centralized tool functions and Pydantic schemas:
 | **Control** | Fully deterministic | Programmatic (Python logic) | LLM-driven |
 | **Compliance** | `@node` pre-processing step | Inline KYC check | `before_agent_callback` |
 | **Parallelism** | `JoinNode` fan-out/fan-in | Sequential (extensible) | N/A |
-| **Type Safety** | Agent-level schemas | Direct tool calls | `input_schema`/`output_schema` |
+| **Type Safety** | Tool-level schemas | Direct tool calls | Tool-level schemas |
 | **Best For** | Regulated pipelines, IVR trees | Data pipelines, custom logic | Conversational assistants |
