@@ -88,12 +88,12 @@ async def dynamic_trading_workflow(ctx: Context, node_input: str):
     )
 
 root_agent = Workflow(
-    name="trading_coordinator_dynamic",
+    name="trading_agent_dynamic",
     edges=[("START", dynamic_trading_workflow)],
 )
 
 app = App(
-    name="trading_coordinator_dynamic",
+    name="trading_agent_dynamic",
     root_agent=root_agent,
     resumability_config=ResumabilityConfig(is_resumable=True),
 )

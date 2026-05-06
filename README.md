@@ -63,13 +63,11 @@ adk2-lab/
 │   ├── agents/                      # Sub-agents (profile, spot, derivative, transfer)
 │   └── tools/compliance.py          # @node KYC compliance check
 ├── trading_agent_dynamic/           # Module 2: Dynamic @node Workflows
-│   ├── agent.py                     # Pure @node workflow with ctx.run_node() routing
-│   ├── agents/                      # Sub-agent definitions (unused by @node approach)
-│   └── tools/compliance.py          # @node compliance check
+│   └── agent.py                     # Pure @node workflow with ctx.run_node() routing
 ├── trading_agent_collaborative/     # Module 3: Collaborative Mixed-Mode
 │   ├── agent.py                     # Root Agent with before_agent_callback + sub_agents
 │   └── agents/                      # Sub-agents with mixed modes (single_turn, task, chat)
-└── adk2-sample-code/                # ADK 2.0 reference samples
+└── other-adk2-sample-code/          # ADK 2.0 reference samples
 ```
 
 ---
@@ -101,10 +99,11 @@ root_agent = Workflow(
         (intent_classifier, {
             "profile": profile_agent,
             "spot": spot_agent,
-            "portfolio": portfolio_profile_node,
+            "derivative": derivative_agent,
+            "transfer": transfer_agent,
+            "portfolio": [portfolio_profile_node, market_data_node],
             "__DEFAULT__": default_handler,
         }),
-        (intent_classifier, {"portfolio": market_data_node}),
         (portfolio_profile_node, portfolio_join),
         (market_data_node, portfolio_join),
         (portfolio_join, portfolio_summary),
