@@ -38,6 +38,17 @@ source .venv/bin/activate
 pip install google-adk==2.0.0b1
 ```
 
+### Step 4: Configure Environment Variables
+```bash
+cp .env.example .env
+```
+Edit `.env` with your GCP project details:
+```
+GOOGLE_GENAI_USE_VERTEXAI=1
+GOOGLE_CLOUD_PROJECT=your-gcp-project-id
+GOOGLE_CLOUD_LOCATION=global
+```
+
 ---
 
 ## Project Structure
