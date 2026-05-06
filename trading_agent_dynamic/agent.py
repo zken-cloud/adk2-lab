@@ -23,7 +23,9 @@ from shared.tools import (
 
 @node
 def profile_node(node_input):
-    return get_user_profile()
+    p = get_user_profile()
+    balances = ", ".join(f"{v} {k}" for k, v in p.get("balances", {}).items())
+    return f"Name: {p['name']}, KYC: {p['kyc_status']}, Tier: {p['tier']}, Balances: {balances}"
 
 @node
 def spot_node(node_input: dict):
