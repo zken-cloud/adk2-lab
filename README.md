@@ -4,7 +4,7 @@
 
 In this immersive 60-minute hands-on workshop, you will explore the three primary orchestration patterns available in ADK 2.0, compare their execution profiles, and execute them using the native CLI runtime.
 
-**Official Reference:** [ADK 2.0 Documentation Portal](https://adk.dev/2.0/)
+**Official Reference:** [ADK 2.0 Documentation Portal](https://adk.dev/2.0/) | [PyPI Package](https://pypi.org/project/google-adk/2.0.0b1/)
 
 ---
 
